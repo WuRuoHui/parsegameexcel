@@ -8,7 +8,7 @@ class ParsegameexcelApplicationTests {
 
     @Test
     void contextLoads() {
-        ParsegameexcelApplicationTests.class.getClassLoader().getResourceAsStream("static/jjl_total_money_gift.properties");
+        ParsegameexcelApplicationTests.class.getClassLoader().getResourceAsStream("static/jll_total_money_gift.properties");
     }
 
 }

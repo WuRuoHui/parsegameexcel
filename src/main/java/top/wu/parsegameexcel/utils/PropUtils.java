@@ -9,9 +9,14 @@ import java.util.*;
 
 public class PropUtils {
 
-    private final static String TOTAL_GIFT_NAME = "static/jjl_total_money_gift.properties";
-    private final static String SINGLE_GIFT_LT_30 = "static/jjl_single_gift_lt_30.properties";
-    private final static String SINGLE_GIFT_MT_30 = "static/jjl_single_gift_mt_30.properties";
+    private final static String TOTAL_GIFT_NAME = "static/jll_total_money_gift.properties";
+    private final static String SINGLE_GIFT_LT_30 = "static/jll_single_gift_lt_30.properties";
+    private final static String SINGLE_GIFT_MT_30 = "static/jll_single_gift_mt_30.properties";
+
+    private final static String SINGLE_GIFT_LT_7 = "static/jll_single_gift_lt_7.properties";
+    private final static String SINGLE_GIFT_MT_7 = "static/jll_single_gift_mt_7.properties";
+
+
 
     private static Properties properties = new Properties();
 
@@ -36,6 +41,16 @@ public class PropUtils {
         return getPropId(SINGLE_GIFT_LT_30, key);
     }
 
+    //获取所有开服小于或等于7天的档位充值档位ID List
+    public static ArrayList<String> getSingleGiftLt7() {
+        return getAllPropIds(SINGLE_GIFT_LT_7);
+    }
+
+    //根据键获得当日充值档位的ID（小于或等于7天）
+    public static String getSingleIdLt7(String key) {
+        return getPropId(SINGLE_GIFT_LT_7, key);
+    }
+
     //获取所有开服天数大于30天的单日充值档位ID List
     public static ArrayList<String> getSingleGiftMt30() {
         return getAllPropIds(SINGLE_GIFT_MT_30);
@@ -44,6 +59,16 @@ public class PropUtils {
     //根据键获得当日充值档位的ID（大于30天）
     public static String getSingleIdMt30(String key) {
         return getPropId(SINGLE_GIFT_MT_30, key);
+    }
+
+    //获取所有开服天数大于7天的单日充值档位ID List
+    public static ArrayList<String> getSingleGiftMt7() {
+        return getAllPropIds(SINGLE_GIFT_MT_7);
+    }
+
+    //根据键获得当日充值档位的ID（大于7天）
+    public static String getSingleIdMt7(String key) {
+        return getPropId(SINGLE_GIFT_MT_7, key);
     }
 
     //根据配置文件名称获取所有的键
@@ -156,5 +181,25 @@ public class PropUtils {
             }
         }
         return singleGiftKeys.subList(0, index);
+    }
+
+    //12.10版本
+    public static String getSubSingleKeyNew(String dist) {
+        if (Integer.valueOf(dist) < 1000) {
+            System.out.println("warning：数值错误，请检查");
+            System.exit(0);
+        }
+        ArrayList<String> singleGiftKeys = getSingleGiftLt7();
+        int index = 0;
+
+        if (Integer.valueOf(dist) >= 50000) return singleGiftKeys.get(singleGiftKeys.size()-1);
+        for (String id : singleGiftKeys) {
+            if (Integer.valueOf(dist) < Integer.valueOf(id)) {
+                index = singleGiftKeys.indexOf(id);
+                break;
+            }
+        }
+        System.out.println(singleGiftKeys.get(index - 1));
+        return singleGiftKeys.get(index-1);
     }
 }

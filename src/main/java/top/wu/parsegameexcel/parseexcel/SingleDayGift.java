@@ -62,7 +62,8 @@ public class SingleDayGift {
             if (rowData.getCell(i) == null || rowData.getCell(i).getCellType() == CellType.BLANK) continue;
             String payDay = sheet.getRow(0).getCell(i).getStringCellValue();
             int money = (int) rowData.getCell(i).getNumericCellValue();
-            List<String> singleGiftRow = ExcelUtils.setSingleGiftRow(district, roleId, day, payDay, String.valueOf(money));
+//            List<String> singleGiftRow = ExcelUtils.setSingleGiftRow(district, roleId, day, payDay, String.valueOf(money));
+            List<String> singleGiftRow = ExcelUtils.setSingleGiftRowNew(district, roleId, day, payDay, String.valueOf(money));
             ExcelUtils.appendListWithHeader(outputSheet, singleGiftRow, outputWorkbook);
         }
     }

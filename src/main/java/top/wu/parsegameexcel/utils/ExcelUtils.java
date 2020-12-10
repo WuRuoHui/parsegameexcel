@@ -57,6 +57,23 @@ public class ExcelUtils {
         return list;
     }
 
+    //设填充一行Excel数据的List（单日充值 12.10版本）
+    public static List<String> setSingleGiftRowNew(String district, String roleId, int day, String payDay, String money) {
+        String key = PropUtils.getSubSingleKeyNew(money);
+        String reason = payDay + "充值" + key + "元";
+        String emailTitle = reason;
+        String emailContent = "亲爱的仙友，您的充值奖励已发放，请留意查收~";
+        List<String> list = setSubRow(district, roleId, reason, emailTitle, emailContent);
+        if (day <= 7) {
+            list.add(PropUtils.getSingleIdLt7(key));
+            list.add("1");
+        } else {
+            list.add(PropUtils.getSingleIdMt7(key));
+            list.add("1");
+        }
+        return list;
+    }
+
     //存储部分数据在list中（区服、角色ID、申请原因、邮件标题、邮件内容）
     public static List<String> setSubRow(String district, String roleId, String reason, String emailTitle, String emailContent) {
         List<String> list = new ArrayList<String>();
