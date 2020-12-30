@@ -10,4 +10,6 @@ public interface ParseJLLService {
 
     public Map<String,XSSFWorkbook> ParseJLLExcel(MultipartFile file);
 
+    XSSFWorkbook MergeExcel(MultipartFile[] files);
+
 }

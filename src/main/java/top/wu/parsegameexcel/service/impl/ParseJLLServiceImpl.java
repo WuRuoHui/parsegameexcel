@@ -5,14 +5,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.wu.parsegameexcel.GiftType;
-import top.wu.parsegameexcel.parseexcel.ExcelParse;
-import top.wu.parsegameexcel.parseexcel.OfflineActivityGift;
-import top.wu.parsegameexcel.parseexcel.SingleDayGift;
-import top.wu.parsegameexcel.parseexcel.TotalMoneyGift;
+import top.wu.parsegameexcel.parseexcel.*;
 import top.wu.parsegameexcel.service.ParseJLLService;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -75,5 +69,28 @@ public class ParseJLLServiceImpl implements ParseJLLService {
             e.printStackTrace();
         }
         return map;
+    }
+
+    @Override
+    public XSSFWorkbook MergeExcel(MultipartFile[] files) {
+
+        XSSFWorkbook mergeXssfWorkbook = new XSSFWorkbook();
+        XSSFWorkbook xssfWorkbook = null;
+        InputStream inputStream = null;
+
+        XSSFSheet mergeSheet = mergeXssfWorkbook.createSheet();
+        for (int i =0; i < files.length; i++) {
+            MultipartFile file = files[i];
+            try {
+                inputStream = file.getInputStream();
+                xssfWorkbook = new XSSFWorkbook(inputStream);
+                String sheetName = xssfWorkbook.getSheetName(0);
+                XSSFSheet sheet = xssfWorkbook.getSheet(sheetName);
+                new MergeExcel().mergeGameExcel(mergeSheet, sheet,i);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return mergeXssfWorkbook;
     }
 }

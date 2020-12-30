@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import top.wu.parsegameexcel.parseexcel.MergeExcel;
 import top.wu.parsegameexcel.parseexcel.SingleDayGift;
 import top.wu.parsegameexcel.parseexcel.TotalMoneyGift;
 import top.wu.parsegameexcel.service.ParseJLLService;
@@ -27,6 +28,21 @@ public class UploadController {
 
     @Autowired
     private ParseJLLService parseJLLService;
+
+    @PostMapping("/merge")
+    @ResponseBody
+    public String uploadFileForMerge(MultipartFile[] files, HttpServletResponse response) throws IOException {
+        if (files == null || files.length < 1){
+            return "请选择文件";
+        }
+        XSSFWorkbook xssfWorkbook = parseJLLService.MergeExcel(files);
+        response.setContentType("application/msexcel");
+        response.setHeader("Content-Disposition", "attachment; filename=" + new String("合并.xlsx".getBytes("utf-8"), "ISO-8859-1"));
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        xssfWorkbook.write(response.getOutputStream());
+        xssfWorkbook.close();
+        return "merge success";
+    }
 
     @PostMapping("/upload")
     @ResponseBody
@@ -65,4 +81,22 @@ public class UploadController {
     public String uploadPage() {
         return "upload";
     }
+
+/*    @PostMapping("/merge")
+    @ResponseBody
+    public String uploadFileForMerge(MultipartFile[] files, HttpServletResponse response) throws IOException {
+        if (files == null || files.length < 1){
+            return "请选择文件";
+        }
+        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(files[0].getInputStream());
+
+        response.setContentType("application/msexcel");
+
+//        response.setContentType("application/:octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=" + new String("合并.xlsx".getBytes("utf-8"), "ISO-8859-1"));
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        xssfWorkbook.write(response.getOutputStream());
+        xssfWorkbook.close();
+        return "merge success";
+    }*/
 }
