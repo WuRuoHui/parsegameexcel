@@ -61,6 +61,36 @@ public class ParseJLLServiceImpl implements ParseJLLService {
                 map.put(sheetName, offlineActivityGiftWorkBook);
                 System.out.println("线下活动奖励文档完毕解析");
             }
+
+            if (sheetName.contains("王者射击单日充值")) {
+                ExcelParse excelParse = new ExcelParse();
+                XSSFWorkbook singleDayGiftWorkBook = excelParse.wzsjExcelParse(sheet, GiftType.SINGLE_DAY_GIFT.getType());
+//                SingleDayGift singleDayGift = new SingleDayGift();
+//                XSSFWorkbook singleDayGiftWorkBook = singleDayGift.parseSingleDayGift(sheet, sheetName);
+                map.put(sheetName, singleDayGiftWorkBook);
+                System.out.println("王者射击单日充值文档完毕解析");
+            }
+
+            if (sheetName.contains("王者射击累计充值")) {
+                ExcelParse excelParse = new ExcelParse();
+                XSSFWorkbook oldTotalMoneyWorkbook = excelParse.wzsjExcelParse(sheet, GiftType.TOTAL_MONEY_GIFT.getType());
+                map.put(sheetName, oldTotalMoneyWorkbook);
+//                OfflineActivityGift offlineActivityGift = new OfflineActivityGift();
+//                XSSFWorkbook singleDayGiftWorkBook = singleDayGift.parseSingleDayGift(sheet, sheetName);
+//                XSSFWorkbook offlineActivityGiftWorkBook = offlineActivityGift.parseAutumnOfflineActivityGift(sheet, sheetName);
+                map.put(sheetName, oldTotalMoneyWorkbook);
+                System.out.println("王者射击累计充值完毕解析");
+            }
+
+            if (sheetName.contains("狩猎单日充值")) {
+                ExcelParse excelParse = new ExcelParse();
+                XSSFWorkbook singleDayGiftWorkBook = excelParse.slsmExcelParse(sheet, GiftType.SINGLE_DAY_GIFT.getType());
+//                SingleDayGift singleDayGift = new SingleDayGift();
+//                XSSFWorkbook singleDayGiftWorkBook = singleDayGift.parseSingleDayGift(sheet, sheetName);
+                map.put(sheetName, singleDayGiftWorkBook);
+                System.out.println("狩猎单日充值文档完毕解析");
+            }
+
         }
         try {
             inputStream.close();

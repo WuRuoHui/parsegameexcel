@@ -56,4 +56,18 @@ public class TotalMoneyGift {
         }
     }
 
+
+
+    //王者射击累计充值档位数组获取   isSingleKey用来处理剑玲珑新增认证
+    public void parseWZSJSingleTotalGift(XSSFRow rowData, XSSFSheet outputSheet, XSSFWorkbook outputWorkbook,
+                                     String district, String roleId, Boolean isSingleKey) {
+        List<String> subTotalKeys = PropUtils.getWZSJSubTotalKeys((int) rowData.getCell(3).getNumericCellValue() + "", isSingleKey);
+        ExcelUtils.setExcelHeader(outputSheet);
+
+        for (String money : subTotalKeys) {
+            List appendRow = ExcelUtils.setWZSJTotalMoneyGiftRow(district, roleId, money);
+            ExcelUtils.appendListWithHeader(outputSheet, appendRow, outputWorkbook);
+        }
+    }
+
 }

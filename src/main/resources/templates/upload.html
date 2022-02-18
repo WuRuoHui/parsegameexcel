@@ -6,7 +6,10 @@
 </head>
 <body>
 
-<form action="/upload" method="post" enctype="multipart/form-data">
+<form action="/upload" method="post" enctype="multipart/form-data" class="layui-form">
+    <button type="button" class="layui-btn" id="test1">
+        <i class="layui-icon">&#xe67c;</i>上传图片
+    </button>
     <p><input type="file" name="file">
         <input type="submit" value="Upload">
 </form>
@@ -18,3 +21,14 @@
 
 </body>
 </html>
+<script src="/static/js/layui/layui.js" type="text/javascript">
+    //一般直接写在一个js文件中
+    layui.use(['layer', 'form','upload'], function(){
+        var layer = layui.layer
+            ,form = layui.form
+            ,upload = layui.upload;
+
+        // layer.msg('Hello World');
+    });
+</script>
+<link rel="stylesheet" href="/static/js/layui/css/layui.css">

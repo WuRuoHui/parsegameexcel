@@ -67,5 +67,44 @@ public class SingleDayGift {
             ExcelUtils.appendListWithHeader(outputSheet, singleGiftRow, outputWorkbook);
         }
     }
+
+    public void parseWZSJSingleDayGift(XSSFSheet sheet, XSSFRow rowData, XSSFSheet outputSheet, XSSFWorkbook outputWorkbook,
+                                   String district, String roleId) {
+        //开服天数
+//        int day = (int) rowData.getCell(3).getNumericCellValue();
+        short lastCellNum = rowData.getLastCellNum();
+        //充值档位
+        ExcelUtils.setExcelHeader(outputSheet);
+        for (int i = 3; i < lastCellNum; i++) {
+            //当单元格为空时跳过
+            if (rowData.getCell(i) == null || rowData.getCell(i).getCellType() == CellType.BLANK) continue;
+            String payDay = sheet.getRow(0).getCell(i).getStringCellValue();
+            int money = (int) rowData.getCell(i).getNumericCellValue();
+            System.out.println("money"+money);
+//            List<String> singleGiftRow = ExcelUtils.setSingleGiftRow(district, roleId, day, payDay, String.valueOf(money));
+            List<String> singleGiftRow = ExcelUtils.setWZSJSingleGiftRowNew(district, roleId, payDay, String.valueOf(money));
+            ExcelUtils.appendListWithHeader(outputSheet, singleGiftRow, outputWorkbook);
+        }
+    }
+
+    public void parseSLSMSingleDayGift(XSSFSheet sheet, XSSFRow rowData, XSSFSheet outputSheet, XSSFWorkbook outputWorkbook,
+                                       String district, String roleId) {
+        //开服天数
+//        int day = (int) rowData.getCell(3).getNumericCellValue();
+        short lastCellNum = rowData.getLastCellNum();
+        //充值档位
+        ExcelUtils.setExcelHeader(outputSheet);
+        for (int i = 3; i < lastCellNum; i++) {
+            //当单元格为空时跳过
+            if (rowData.getCell(i) == null || rowData.getCell(i).getCellType() == CellType.BLANK) continue;
+            String payDay = sheet.getRow(0).getCell(i).getStringCellValue();
+            int money = (int) rowData.getCell(i).getNumericCellValue();
+            System.out.println("money"+money);
+//            List<String> singleGiftRow = ExcelUtils.setSingleGiftRow(district, roleId, day, payDay, String.valueOf(money));
+            List<String> singleGiftRow = ExcelUtils.setSLSMSingleGiftRowNew(district, roleId, payDay, String.valueOf(money));
+            ExcelUtils.appendListWithHeader(outputSheet, singleGiftRow, outputWorkbook);
+        }
+    }
+
     }
 
